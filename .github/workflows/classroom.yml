@@ -1,9 +1,6 @@
-name: Autograding
-on:
-  push:
-    branches:
-      - main
-      - master
+name: GitHub Classroom Workflow
+
+on: [push]
 
 permissions:
   checks: write
@@ -11,12 +8,12 @@ permissions:
   contents: read
 
 jobs:
-  grading:
+  build:
+    name: Autograding
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Setup Grading Script
         run: chmod +x .github/scripts/check-assignment.sh
 
@@ -58,5 +55,10 @@ jobs:
 
       - name: Autograding Reporter
         uses: education/autograding-grading-reporter@v1
+        env:
+          CHECKFILES_RESULTS: "${{steps.checkfiles.outputs.result}}"
+          CHECKHUD_RESULTS: "${{steps.checkhud.outputs.result}}"
+          CHECKDESIGN_RESULTS: "${{steps.checkdesign.outputs.result}}"
+          CHECKREPORT_RESULTS: "${{steps.checkreport.outputs.result}}"
         with:
           runners: checkfiles,checkhud,checkdesign,checkreport
