@@ -60,4 +60,4 @@ jobs:
       - name: Autograding Reporter
         uses: education/autograding-grading-reporter@v1
         with:
-          runners: "check-files,check-hud,check-design,check-report"
+          runners: check-files,check-hud,check-design,check-report
