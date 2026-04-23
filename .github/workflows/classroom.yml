@@ -17,20 +17,47 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Run Assignment Check
-        id: assignment-check
-        run: |
-          # Capture the output of the script to a file
-          .github/scripts/check_assignment.sh > grading_output.txt
-          cat grading_output.txt
-          
-          # Extract the score using grep/sed
-          SCORE=$(grep "Final Score:" grading_output.txt | sed 's/[^0-9]*\([0-9]*\).*/\1/')
-          echo "score=$SCORE" >> $GITHUB_OUTPUT
+      - name: File Integrity Check
+        id: check-files
+        uses: education/autograding-command-grader@v1
+        with:
+          test-name: File Integrity
+          setup-command: chmod +x .github/scripts/check_assignment.sh
+          command: ./.github/scripts/check_assignment.sh --files
+          timeout: 1
+          max-score: 20
+
+      - name: HUD Structure Check
+        id: check-hud
+        uses: education/autograding-command-grader@v1
+        with:
+          test-name: HUD Structure
+          setup-command: chmod +x .github/scripts/check_assignment.sh
+          command: ./.github/scripts/check_assignment.sh --hud
+          timeout: 1
+          max-score: 20
+
+      - name: Design Standards Check
+        id: check-design
+        uses: education/autograding-command-grader@v1
+        with:
+          test-name: Design Standards
+          setup-command: chmod +x .github/scripts/check_assignment.sh
+          command: ./.github/scripts/check_assignment.sh --design
+          timeout: 1
+          max-score: 30
+
+      - name: UX Research Report Check
+        id: check-report
+        uses: education/autograding-command-grader@v1
+        with:
+          test-name: UX Research Report
+          setup-command: chmod +x .github/scripts/check_assignment.sh
+          command: ./.github/scripts/check_assignment.sh --report
+          timeout: 1
+          max-score: 30
 
       - name: Autograding Reporter
         uses: education/autograding-grading-reporter@v1
         with:
-          runners: assignment-check
-        env:
-          ASSIGNMENT_CHECK_RESULTS: "${{ steps.assignment-check.outputs.score }}"
+          runners: "check-files,check-hud,check-design,check-report"
