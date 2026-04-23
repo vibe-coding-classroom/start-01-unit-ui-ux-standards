@@ -18,46 +18,46 @@ jobs:
         uses: actions/checkout@v4
 
       - name: File Integrity Check
-        id: check-files
-        uses: education/autograding-command-grader@v1
+        id: test1
+        uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: File Integrity
-          setup-command: chmod +x .github/scripts/check_assignment.sh
-          command: ./.github/scripts/check_assignment.sh --files
+          setup-command: chmod +x .github/scripts/check-assignment.sh
+          command: ./.github/scripts/check-assignment.sh --files
           timeout: 1
           max-score: 20
 
       - name: HUD Structure Check
-        id: check-hud
-        uses: education/autograding-command-grader@v1
+        id: test2
+        uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: HUD Structure
-          setup-command: chmod +x .github/scripts/check_assignment.sh
-          command: ./.github/scripts/check_assignment.sh --hud
+          setup-command: chmod +x .github/scripts/check-assignment.sh
+          command: ./.github/scripts/check-assignment.sh --hud
           timeout: 1
           max-score: 20
 
       - name: Design Standards Check
-        id: check-design
-        uses: education/autograding-command-grader@v1
+        id: test3
+        uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: Design Standards
-          setup-command: chmod +x .github/scripts/check_assignment.sh
-          command: ./.github/scripts/check_assignment.sh --design
+          setup-command: chmod +x .github/scripts/check-assignment.sh
+          command: ./.github/scripts/check-assignment.sh --design
           timeout: 1
           max-score: 30
 
       - name: UX Research Report Check
-        id: check-report
-        uses: education/autograding-command-grader@v1
+        id: test4
+        uses: classroom-resources/autograding-command-grader@v1
         with:
           test-name: UX Research Report
-          setup-command: chmod +x .github/scripts/check_assignment.sh
-          command: ./.github/scripts/check_assignment.sh --report
+          setup-command: chmod +x .github/scripts/check-assignment.sh
+          command: ./.github/scripts/check-assignment.sh --report
           timeout: 1
           max-score: 30
 
       - name: Autograding Reporter
-        uses: education/autograding-grading-reporter@v1
+        uses: classroom-resources/autograding-grading-reporter@v1
         with:
-          runners: check-files,check-hud,check-design,check-report
+          runners: test1,test2,test3,test4
