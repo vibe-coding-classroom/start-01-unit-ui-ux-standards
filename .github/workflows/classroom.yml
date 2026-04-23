@@ -24,7 +24,7 @@ jobs:
         id: checkfiles
         uses: education/autograding-command-grader@v1
         with:
-          test-name: File Integrity
+          test-name: FileIntegrity
           command: ./.github/scripts/check-assignment.sh --files
           timeout: 2
           max-score: 20
@@ -33,7 +33,7 @@ jobs:
         id: checkhud
         uses: education/autograding-command-grader@v1
         with:
-          test-name: HUD Structure
+          test-name: HUDStructure
           command: ./.github/scripts/check-assignment.sh --hud
           timeout: 2
           max-score: 20
@@ -42,7 +42,7 @@ jobs:
         id: checkdesign
         uses: education/autograding-command-grader@v1
         with:
-          test-name: Design Standards
+          test-name: DesignStandards
           command: ./.github/scripts/check-assignment.sh --design
           timeout: 2
           max-score: 30
@@ -51,7 +51,7 @@ jobs:
         id: checkreport
         uses: education/autograding-command-grader@v1
         with:
-          test-name: UX Research Report
+          test-name: UXResearchReport
           command: ./.github/scripts/check-assignment.sh --report
           timeout: 2
           max-score: 30
