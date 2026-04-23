@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FPV HUD - UI/UX 設計規範</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- FPV 背景模擬 -->
+    <div class="video-container">
+        <div class="video-placeholder">FPV LIVE STREAM FEED</div>
+    </div>
+
+    <!-- 視野安全區標記 (開發參考) -->
+    <div class="safe-zone-marker"></div>
+
+    <!-- HUD 抬頭顯示疊加層 -->
+    <div class="hud-overlay">
+        <!-- 頂部遙測數據 -->
+        <div class="hud-top">
+            <div class="telemetry-group">
+                <div class="telemetry-item">
+                    <img src="assets/icons/signal.svg" class="icon" alt="Signal">
+                    <span class="value">98%</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="label">PING:</span>
+                    <span class="value">12ms</span>
+                </div>
+            </div>
+
+            <div class="telemetry-group" id="battery-status">
+                <div class="telemetry-item">
+                    <img src="assets/icons/battery.svg" class="icon" alt="Battery">
+                    <span class="value">85%</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="value">14.8V</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 中央警告提示 -->
+        <div class="alert-banner" id="emergency-alert">
+            LOW BATTERY WARNING
+        </div>
+
+        <!-- 底部拇指操作區 -->
+        <div class="thumb-zone">
+            <!-- 左側搖桿/按鈕 -->
+            <div class="control-pad">
+                <button class="btn-control" aria-label="Up">▲</button>
+                <div></div> <!-- Spacer -->
+                <button class="btn-control" aria-label="Action">A</button>
+                <button class="btn-control" aria-label="Left">◀</button>
+                <button class="btn-control emergency" id="stop-btn" aria-label="Emergency Stop">STOP</button>
+                <button class="btn-control" aria-label="Right">▶</button>
+                <button class="btn-control" aria-label="Down">▼</button>
+            </div>
+
+            <!-- 右側搖桿/按鈕 -->
+            <div class="control-pad">
+                <button class="btn-control" aria-label="Forward">FWD</button>
+                <div></div>
+                <button class="btn-control" aria-label="Boost">B</button>
+                <div></div>
+                <button class="btn-control" id="mode-toggle">MODE</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 模擬異常狀態觸發
+        const batteryStatus = document.getElementById('battery-status');
+        const emergencyAlert = document.getElementById('emergency-alert');
+        const stopBtn = document.getElementById('stop-btn');
+
+        // 點擊停止按鈕模擬緊急狀態
+        stopBtn.addEventListener('click', () => {
+            batteryStatus.classList.toggle('state-warning');
+            emergencyAlert.classList.toggle('active');
+            
+            if (emergencyAlert.classList.contains('active')) {
+                console.warn('EMERGENCY STATE ACTIVATED');
+            }
+        });
+    </script>
+</body>
+</html>

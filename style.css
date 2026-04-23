@@ -1,0 +1,220 @@
+/* UI/UX Standards Design System */
+:root {
+    /* Color Palette */
+    --primary: #00f2ff;
+    --danger: #ff3e3e;
+    --warning: #ffb800;
+    --success: #00ff94;
+    --bg-overlay: rgba(0, 0, 0, 0.6);
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    
+    /* Typography */
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    
+    /* Spacing */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-main);
+    background: #0a0a0a;
+    color: white;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* FPV Background Simulation */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(45deg, #1a1a1a, #2a2a2a);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-placeholder {
+    font-size: 2rem;
+    color: rgba(255, 255, 255, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+}
+
+/* HUD Overlay */
+.hud-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    pointer-events: none;
+}
+
+.hud-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.telemetry-group {
+    background: var(--bg-overlay);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    pointer-events: auto;
+}
+
+.telemetry-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.telemetry-item .icon {
+    width: 20px;
+    height: 20px;
+    color: var(--primary);
+}
+
+.telemetry-item .value {
+    font-family: var(--font-mono);
+    font-weight: 600;
+}
+
+/* Thumb Zone Controls */
+.thumb-zone {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35%; /* Natural thumb reach zone */
+    padding: var(--space-xl);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    pointer-events: none;
+}
+
+.control-pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+    pointer-events: auto;
+}
+
+.btn-control {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid var(--glass-border);
+    background: var(--bg-overlay);
+    backdrop-filter: blur(12px);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.btn-control:active {
+    transform: scale(0.9);
+    background: var(--primary);
+    border-color: var(--primary);
+    color: black;
+}
+
+.btn-control.emergency {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.btn-control.emergency:active {
+    background: var(--danger);
+    color: white;
+}
+
+/* Warning States */
+.state-warning {
+    animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 62, 62, 0.7);
+        border-color: var(--danger);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(255, 62, 62, 0);
+        border-color: var(--danger);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 62, 62, 0);
+        border-color: var(--danger);
+    }
+}
+
+.alert-banner {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--danger);
+    color: white;
+    padding: var(--space-sm) var(--space-xl);
+    border-radius: 4px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    display: none;
+}
+
+.alert-banner.active {
+    display: block;
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-50%, 0, 0) translateX(-1px); }
+  20%, 80% { transform: translate3d(-50%, 0, 0) translateX(2px); }
+  30%, 50%, 70% { transform: translate3d(-50%, 0, 0) translateX(-4px); }
+  40%, 60% { transform: translate3d(-50%, 0, 0) translateX(4px); }
+}
+
+/* Visibility Safe Zone */
+.safe-zone-marker {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40%;
+    height: 40%;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+}

@@ -1,0 +1,36 @@
+name: Autograding
+on:
+  push:
+    branches:
+      - main
+      - master
+
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  grading:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Assignment Check
+        id: assignment-check
+        run: |
+          # Capture the output of the script to a file
+          .github/scripts/check_assignment.sh > grading_output.txt
+          cat grading_output.txt
+          
+          # Extract the score using grep/sed
+          SCORE=$(grep "Final Score:" grading_output.txt | sed 's/[^0-9]*\([0-9]*\).*/\1/')
+          echo "score=$SCORE" >> $GITHUB_OUTPUT
+
+      - name: Autograding Reporter
+        uses: education/autograding-grading-reporter@v1
+        with:
+          runners: assignment-check
+        env:
+          ASSIGNMENT_CHECK_RESULTS: "${{ steps.assignment-check.outputs.score }}"
