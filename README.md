@@ -1,5 +1,3 @@
-Viewed start-01-unit-ui-ux-standards.html:1-584
-
 針對 **`start-01-unit-ui-ux-standards` (UI/UX 設計規範：從視覺到體驗)** 單元，這是學員從「排版」跨入「產品設計」的重要門檻。它要求學員具備 **人機工程 (Ergonomics)** 的意識，學習如何根據「拇指熱區 (Thumb Zone)」分配功能權限，並實作 FPV 抬頭顯示器 (HUD) 與異常狀態的視覺反饋，確保控制介面在高速操作下依然直覺且安全。
 
 以下是在 **GitHub Classroom** 部署其作業 (Assignments) 的具體建議：
